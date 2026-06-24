@@ -54,25 +54,25 @@ html.dark {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 50%;
-  border: 1px solid var(--border);
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
   background: var(--bg-alt);
   color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 200;
-  transition: background 0.15s, border-color 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .theme-toggle:hover {
-  background: var(--border);
+  background: var(--bg-hover, var(--border));
   color: var(--text);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.13);
 }
 
 /* ── Reset & base ─────────────────────────────────────────────── */
@@ -368,11 +368,15 @@ tr:last-child td { border-bottom: none; }
 }
 
 .knowledge-check summary::before {
-  content: '▸';
-  font-size: 0.75em;
-  color: var(--text-light);
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
   flex-shrink: 0;
-  transition: transform 0.15s;
+  background-color: var(--text-light);
+  transition: transform 0.15s, background-color 0.15s;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'12'%20height%3D'12'%20viewBox%3D'0%200%2012%2012'%20fill%3D'none'%3E%3Cpath%20d%3D'M4.5%203L7.5%206L4.5%209'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'12'%20height%3D'12'%20viewBox%3D'0%200%2012%2012'%20fill%3D'none'%3E%3Cpath%20d%3D'M4.5%203L7.5%206L4.5%209'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
 }
 
 .knowledge-check details[open] summary::before {
@@ -466,8 +470,6 @@ tr:last-child td { border-bottom: none; }
 }
 
 .lesson-nav a:hover { color: var(--accent-dark); }
-.lesson-nav .prev::before { content: '←'; }
-.lesson-nav .next::after  { content: '→'; }
 
 /* ── Project badge ────────────────────────────────────────────── */
 
@@ -511,10 +513,9 @@ tr:last-child td { border-bottom: none; }
 /* ── Heading anchor links ─────────────────────────────────────── */
 
 .heading-anchor {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin-left: 0.4rem;
-  font-size: 0.75em;
-  font-weight: 400;
   color: var(--text-light);
   text-decoration: none;
   opacity: 0;
