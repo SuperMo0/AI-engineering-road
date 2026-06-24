@@ -32,10 +32,10 @@
       --text:        #e2e8f0;
       --text-muted:  #94a3b8;
       --text-light:  #64748b;
-      --bg:          #0f1117;
-      --bg-alt:      #161b27;
-      --bg-hover:    #1e2435;
-      --border:      #2d3748;
+      --bg:          #1f1f1e;
+      --bg-alt:      #2a2a28;
+      --bg-hover:    #333331;
+      --border:      #3a3a38;
       --accent:      #009485;
       --accent-dark: #00c4b0;
       --success:     #4ade80;
@@ -282,6 +282,51 @@
       color: var(--text-light);
       font-style: italic;
     }
+
+    /* ── Continue button ── */
+    .continue-btn {
+      display: none;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .continue-btn:hover { background: var(--accent-dark); color: #fff; }
+    .continue-btn.visible { display: inline-flex; }
+
+    /* ── Site stats strip ── */
+    .site-stats {
+      margin-top: 1.1rem;
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .site-stats strong { color: var(--text-muted); }
+
+    /* ── Site footer ── */
+    .site-footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .site-footer a { color: var(--text-muted); }
+    .site-footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -294,10 +339,22 @@
       <div class="progress-bar-fill" id="progress-fill"></div>
     </div>
     <span id="progress-label">0 of 0 complete</span>
+    <a class="continue-btn" id="continue-btn" href="#">Continue →</a>
+  </div>
+  <div class="site-stats">
+    <span><strong id="stat-done">0</strong> lessons completed</span>
+    <span><strong>6</strong> chapters</span>
+    <span><strong id="stat-total-lessons">—</strong> lessons &amp; projects</span>
+    <span><strong id="stat-submissions">—</strong> submitted projects</span>
   </div>
 </header>
 
 <main class="site-body" id="curriculum"></main>
+
+<footer class="site-footer">
+  <span>Curriculum inspired by the work of <a href="https://www.aihero.dev" target="_blank" rel="noopener">Matt Pocock</a> and <a href="https://www.daveebbelaar.com" target="_blank" rel="noopener">Dave Ebbelaar</a>.</span>
+  <span>Built in the spirit of <a href="https://www.theodinproject.com" target="_blank" rel="noopener">The Odin Project</a>.</span>
+</footer>
 
 <script type="module">
   import { getProgress } from './assets/progress.js';
@@ -306,6 +363,11 @@
 
   const MANIFEST_URL = './assets/lesson-manifest.json';
 
+  function isDone(item, progress) {
+    const slug = item.file.replace('lessons/', '').replace('.html', '');
+    return !!(progress[item.id] || progress[slug]);
+  }
+
   async function init() {
     const manifest = await fetch(MANIFEST_URL).then(r => r.json());
     const progress  = getProgress();
@@ -313,20 +375,24 @@
     const container = document.getElementById('curriculum');
     let totalItems = 0;
     let doneItems  = 0;
+    let firstIncomplete = null;
 
-    manifest.chapters.forEach((chapter, ci) => {
+    manifest.chapters.forEach((chapter) => {
       const allItems = chapter.topics.flatMap(t => t.items);
       totalItems += allItems.length;
-      const doneCh = allItems.filter(it => progress[it.id]).length;
+      const doneCh = allItems.filter(it => isDone(it, progress)).length;
       doneItems  += doneCh;
 
+      if (!firstIncomplete) {
+        firstIncomplete = allItems.find(it => !isDone(it, progress)) || null;
+      }
+
       const isPlanned = chapter.status === 'planned';
-      const isOpen    = false;
 
       const el = document.createElement('div');
-      el.className = 'chapter' + (isOpen ? ' open' : '');
+      el.className = 'chapter';
       el.innerHTML = `
-        <button class="chapter-header" aria-expanded="${isOpen}">
+        <button class="chapter-header" aria-expanded="false">
           <span class="chapter-number">Chapter ${chapter.number}</span>
           <span class="chapter-title">${chapter.title}</span>
           <span class="chapter-status">${isPlanned ? 'Coming soon' : `${doneCh}/${allItems.length}`}</span>
@@ -342,20 +408,45 @@
       `;
 
       el.querySelector('.chapter-header').addEventListener('click', () => {
-        el.classList.toggle('open');
+        const open = el.classList.toggle('open');
+        el.querySelector('.chapter-header').setAttribute('aria-expanded', open);
       });
 
       container.appendChild(el);
     });
 
-    // Update progress bar
+    // Progress bar
     const pct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0;
     document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('progress-label').textContent =
-      `${doneItems} of ${totalItems} complete`;
+    document.getElementById('progress-label').textContent = `${doneItems} of ${totalItems} complete`;
 
-    // Re-render on progress change (from lesson tabs)
+    // Stats strip
+    document.getElementById('stat-done').textContent = doneItems;
+    document.getElementById('stat-total-lessons').textContent = totalItems;
+
+    // Continue button
+    if (firstIncomplete) {
+      const btn = document.getElementById('continue-btn');
+      btn.href = './' + firstIncomplete.file;
+      btn.classList.add('visible');
+    }
+
+    // Re-render on progress change
     window.addEventListener('progress-change', () => location.reload());
+  }
+
+  async function fetchSubmissions() {
+    try {
+      const res = await fetch(
+        'https://api.github.com/repos/SuperMo0/AI-engineering-road/discussions?per_page=1',
+        { headers: { 'Accept': 'application/vnd.github+json' } }
+      );
+      if (!res.ok) return;
+      const link = res.headers.get('Link') || '';
+      const m = link.match(/[?&]page=(\d+)>;\s*rel="last"/);
+      const count = m ? m[1] : (await res.json()).length;
+      document.getElementById('stat-submissions').textContent = count;
+    } catch {}
   }
 
   function renderTopic(topic, progress) {
@@ -384,6 +475,7 @@
   }
 
   init();
+  fetchSubmissions();
 </script>
 
 </body>
