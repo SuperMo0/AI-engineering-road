@@ -1,0 +1,10 @@
+<div class="additional-resources">
+  <h2>Additional Resources</h2>
+  <ul>
+    {% for item in page.additional_resources %}
+    <li>
+      <a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>{% if item.desc %} — {{ item.desc }}{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>

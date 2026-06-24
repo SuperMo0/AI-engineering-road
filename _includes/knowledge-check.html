@@ -1,0 +1,17 @@
+<div class="knowledge-check">
+  <h2>Knowledge Check</h2>
+  <p class="kc-intro">Answer each question from memory, then click to reveal.</p>
+  <ul>
+    {% for item in page.knowledge_check %}
+    <li>
+      <details>
+        <summary>{{ item.q }}</summary>
+        <div class="answer">
+          {{ item.a | markdownify }}
+          {% if item.section %}<a href="{{ item.section }}">→ {{ item.section_title }}</a>{% endif %}
+        </div>
+      </details>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

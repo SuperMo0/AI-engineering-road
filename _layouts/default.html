@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — AI Engineering Curriculum</title>
+  <meta name="description" content="{{ page.description | default: site.description | strip_html | truncate: 160 }}">
+  <script>if(localStorage.getItem('ai-curriculum-theme')==='dark')document.documentElement.classList.add('dark')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github.min.css">
+  <link id="hljs-dark"  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css">
+  <script>
+    (function() {
+      var dark = localStorage.getItem('ai-curriculum-theme') === 'dark';
+      document.getElementById('hljs-dark').disabled  = !dark;
+      document.getElementById('hljs-light').disabled = dark;
+    })();
+  </script>
+  {% include analytics.html %}
+</head>
+<body>
+
+{{ content }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+  window.addEventListener('theme-change', function(e) {
+    document.getElementById('hljs-light').disabled =  e.detail.dark;
+    document.getElementById('hljs-dark').disabled  = !e.detail.dark;
+  });
+</script>
+</body>
+</html>

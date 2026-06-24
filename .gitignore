@@ -3,4 +3,10 @@ CONTEXT.md
 skills-lock.json
 PLAN.md
 .claude
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+.sass-cache/
+Gemfile.lock
 

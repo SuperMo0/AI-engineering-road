@@ -1,0 +1,27 @@
+title: AI Engineering Curriculum
+description: A self-paced curriculum to go from Python developer to hireable AI Engineer — in the spirit of The Odin Project.
+baseurl: "/AI-engineering-road"
+url: "https://supermo0.github.io"
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: ~
+
+plugins:
+  - jekyll-seo-tag
+
+exclude:
+  - PLAN.md
+  - MISSION.md
+  - RESOURCES.md
+  - CONTEXT.md
+  - CLAUDE.md
+  - GLOSSARY.md
+  - learning-records/
+  - reference/
+  - skills-lock.json
+  - Gemfile
+  - Gemfile.lock
+  - "*.sh"

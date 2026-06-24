@@ -7,6 +7,7 @@ const STORAGE_KEY = 'ai-curriculum-theme';
 
 function applyTheme(dark) {
   document.documentElement.classList.toggle('dark', dark);
+  window.dispatchEvent(new CustomEvent('theme-change', { detail: { dark } }));
 }
 
 /* Apply immediately on load to avoid flash of wrong theme. */

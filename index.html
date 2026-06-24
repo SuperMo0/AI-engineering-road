@@ -9,22 +9,22 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <style>
     :root {
-      --text:        #1a1a1a;
-      --text-muted:  #4b5563;
-      --text-light:  #9ca3af;
-      --bg:          #ffffff;
-      --bg-alt:      #f9fafb;
-      --bg-hover:    #f3f4f6;
-      --border:      #e5e7eb;
-      --accent:      #2563eb;
-      --accent-dark: #1d4ed8;
+      --text:        #1c1917;
+      --text-muted:  #78716c;
+      --text-light:  #a8a29e;
+      --bg:          #faf8f5;
+      --bg-alt:      #f0ede8;
+      --bg-hover:    #e8e3dc;
+      --border:      #e5e0d8;
+      --accent:      #009485;
+      --accent-dark: #007a6e;
       --success:     #16a34a;
       --success-bg:  #dcfce7;
       --success-fg:  #15803d;
       --project-bg:  #ede9fe;
       --project-fg:  #6d28d9;
-      --lesson-bg:   #dbeafe;
-      --lesson-fg:   #1d4ed8;
+      --lesson-bg:   #ccf0ec;
+      --lesson-fg:   #007a6e;
       --font-ui:     'Inter', system-ui, -apple-system, sans-serif;
     }
 
@@ -36,15 +36,15 @@
       --bg-alt:      #161b27;
       --bg-hover:    #1e2435;
       --border:      #2d3748;
-      --accent:      #60a5fa;
-      --accent-dark: #93c5fd;
+      --accent:      #009485;
+      --accent-dark: #00c4b0;
       --success:     #4ade80;
       --success-bg:  #052e16;
       --success-fg:  #4ade80;
       --project-bg:  #1e1b4b;
       --project-fg:  #a78bfa;
-      --lesson-bg:   #1e3a5f;
-      --lesson-fg:   #60a5fa;
+      --lesson-bg:   #0a2420;
+      --lesson-fg:   #009485;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -321,7 +321,7 @@
       doneItems  += doneCh;
 
       const isPlanned = chapter.status === 'planned';
-      const isOpen    = ci === 0; // open first chapter by default
+      const isOpen    = false;
 
       const el = document.createElement('div');
       el.className = 'chapter' + (isOpen ? ' open' : '');
@@ -360,7 +360,8 @@
 
   function renderTopic(topic, progress) {
     const rows = topic.items.map(item => {
-      const done   = !!progress[item.id];
+      const slug   = item.file.replace('lessons/', '').replace('.html', '');
+      const done   = !!(progress[item.id] || progress[slug]);
       const badge  = item.type === 'chapter-project' ? 'chapter-project'
                    : item.type === 'project'         ? 'project'
                    :                                   'lesson';

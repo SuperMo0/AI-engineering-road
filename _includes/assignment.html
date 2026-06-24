@@ -1,0 +1,26 @@
+<div class="assignment">
+  <h2>Assignment</h2>
+  <ol>
+    {% assign a = page.assignment %}
+    {% if a.article %}
+    <li>
+      <strong>Read:</strong> <a href="{{ a.article.url }}" target="_blank" rel="noopener">{{ a.article.title }}</a>{% if a.article.author %} by {{ a.article.author }}{% endif %}{% if a.article.time %} — {{ a.article.time }}{% endif %}.
+      {% if a.article.why %}<span class="why">{{ a.article.why }}</span>{% endif %}
+    </li>
+    {% endif %}
+    {% if a.task %}
+    <li>
+      <strong>Do:</strong> {{ a.task.description | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+      {% if a.task.steps %}
+      <ol>
+        {% for step in a.task.steps %}
+        <li>{{ step | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+      {% if a.task.expected %}<br><strong>Expected output:</strong> {{ a.task.expected | markdownify | remove: '<p>' | remove: '</p>' | strip }}{% endif %}
+      {% if a.task.why %}<span class="why">{{ a.task.why }}</span>{% endif %}
+    </li>
+    {% endif %}
+  </ol>
+</div>

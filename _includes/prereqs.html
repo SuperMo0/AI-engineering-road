@@ -1,0 +1,10 @@
+<section id="prerequisites">
+  <div class="learning-outcomes">
+    <h2>Prerequisites</h2>
+    <ul>
+      {% for item in page.prereqs %}
+      <li>{{ item | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

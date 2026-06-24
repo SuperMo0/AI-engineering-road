@@ -4,22 +4,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --text:           #1a1a1a;
-  --text-muted:     #4b5563;
-  --text-light:     #9ca3af;
-  --bg:             #ffffff;
-  --bg-alt:         #f9fafb;
-  --bg-code:        #f3f4f6;
-  --accent:         #2563eb;
-  --accent-dark:    #1d4ed8;
+  --text:           #1c1917;
+  --text-muted:     #78716c;
+  --text-light:     #a8a29e;
+  --bg:             #faf8f5;
+  --bg-alt:         #f0ede8;
+  --bg-code:        #f5f2ee;
+  --accent:         #009485;
+  --accent-dark:    #007a6e;
   --success:        #16a34a;
   --success-bg:     #dcfce7;
-  --warning:        #d97706;
-  --border:         #e5e7eb;
+  --warning:        #c2820a;
+  --border:         #e5e0d8;
   --project-fg:     #6d28d9;
   --project-bg:     #ede9fe;
-  --assignment-bg:  #fffbeb;
-  --assignment-bdr: #fde68a;
+  --assignment-bg:  #f5f0e8;
+  --assignment-bdr: #d5c9b5;
   --font-body:      'Inter', system-ui, -apple-system, sans-serif;
   --font-ui:        'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:      'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
@@ -36,16 +36,16 @@ html.dark {
   --bg:             #0f1117;
   --bg-alt:         #161b27;
   --bg-code:        #1e2435;
-  --accent:         #60a5fa;
-  --accent-dark:    #93c5fd;
+  --accent:         #009485;
+  --accent-dark:    #00c4b0;
   --success:        #4ade80;
   --success-bg:     #052e16;
   --warning:        #fbbf24;
   --border:         #2d3748;
   --project-fg:     #a78bfa;
   --project-bg:     #1e1b4b;
-  --assignment-bg:  #1c1a0e;
-  --assignment-bdr: #6b4f10;
+  --assignment-bg:  #1a1a0e;
+  --assignment-bdr: #6b5010;
 }
 
 /* ── Theme toggle ─────────────────────────────────────────────── */
@@ -507,6 +507,62 @@ tr:last-child td { border-bottom: none; }
 .callout.info  { border-color: var(--accent); }
 .callout.warn  { border-color: var(--warning); }
 .callout.good  { border-color: var(--success); }
+
+/* ── Fixed home button ────────────────────────────────────────── */
+
+.home-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.home-btn:hover {
+  background: var(--border);
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ── Lesson footer note ───────────────────────────────────────── */
+
+.lesson-footer-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ── Community showcase (project pages) ──────────────────────── */
+
+.community-showcase {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--border);
+}
+
+.community-showcase h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.community-showcase > p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
 
 /* ── Print ────────────────────────────────────────────────────── */
 

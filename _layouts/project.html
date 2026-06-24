@@ -1,0 +1,56 @@
+---
+layout: default
+---
+
+<a class="home-btn" href="{{ '/' | relative_url }}">⌂ Home</a>
+
+<div class="lesson-wrapper">
+
+  <nav class="breadcrumb">
+    <a href="{{ '/' | relative_url }}">AI Engineering Curriculum</a>
+    <span>›</span>
+    Chapter {{ page.chapter }}: {{ page.chapter_title }}
+    <span>›</span>
+    {{ page.project_type | default: 'Project' }}
+  </nav>
+
+  <header class="lesson-header">
+    <p class="lesson-meta">Chapter {{ page.chapter }} · <span class="project-badge">{{ page.project_type | default: 'Project' }}</span></p>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="lesson-desc">{{ page.description }}</p>{% endif %}
+  </header>
+
+  <div class="lesson-content">
+    {{ content }}
+  </div>
+
+  <footer class="lesson-footer">
+    <span class="lesson-footer-note">Questions? Type in the prompt to continue learning.</span>
+    <button class="btn-complete" id="btn-complete" type="button">Mark as complete</button>
+  </footer>
+
+  <nav class="lesson-nav">
+    {% if page.prev %}
+      <a class="prev" href="{{ page.prev }}">{{ page.prev_title | default: 'Previous' }}</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+    {% if page.next %}
+      <a class="next" href="{{ page.next }}">{{ page.next_title | default: 'Next' }}</a>
+    {% endif %}
+  </nav>
+
+  <section class="community-showcase">
+    <h2>Community Showcase</h2>
+    <p>Finished this project? Share your GitHub repo link in the discussion below. Browse what others built to get inspiration and give feedback.</p>
+    {% include giscus.html %}
+  </section>
+
+</div>
+
+<script type="module">
+  import { initMarkComplete } from '{{ "/assets/progress.js" | relative_url }}';
+  import { initThemeToggle } from '{{ "/assets/theme.js" | relative_url }}';
+  initMarkComplete('{{ page.lesson_id }}');
+  initThemeToggle();
+</script>
