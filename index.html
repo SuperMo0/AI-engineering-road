@@ -26,7 +26,6 @@
       --lesson-bg:   #ccf0ec;
       --lesson-fg:   #007a6e;
       --font-ui:     'Inter', system-ui, -apple-system, sans-serif;
-      --grid:        rgba(0,0,0,0.042);
     }
 
     html.dark {
@@ -46,7 +45,6 @@
       --project-fg:  #a78bfa;
       --lesson-bg:   #0a2420;
       --lesson-fg:   #009485;
-      --grid:        rgba(255,255,255,0.034);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,11 +55,7 @@
       line-height: 1.6;
       color: var(--text);
       background: var(--bg);
-      background-image:
-        linear-gradient(var(--grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 36px 36px;
-      transition: background-color 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
 
     /* ── Theme toggle ── */
@@ -99,7 +93,11 @@
       justify-content: center;
       width: 2.6rem;
       height: 2.6rem;
-      background: var(--accent);
+      background-color: var(--accent);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.13) 1px, transparent 1px);
+      background-size: 7px 7px;
       color: #fff;
       font-size: 0.65rem;
       font-weight: 800;
@@ -146,20 +144,12 @@
 
     /* ── GitHub / repo banner ── */
     .repo-banner {
-      margin-top: 1.1rem;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 0.45rem;
       font-size: 0.8rem;
       color: var(--text-light);
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.42rem 0.75rem;
-      text-decoration: none;
-      transition: border-color 0.15s, color 0.15s;
     }
-    .repo-banner:hover { border-color: var(--accent); color: var(--text-muted); text-decoration: none; }
     .repo-banner a { color: var(--accent); text-decoration: none; font-weight: 500; }
     .repo-banner a:hover { text-decoration: underline; }
 
@@ -350,20 +340,34 @@
     /* ── Continue button ── */
     .continue-btn {
       display: none;
-      align-items: center;
-      gap: 0.35rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.05rem;
       background: var(--accent);
       color: #fff;
       text-decoration: none;
       border-radius: 4px;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      white-space: nowrap;
+      padding: 0.38rem 0.9rem 0.42rem;
       transition: background 0.15s;
+      max-width: 220px;
     }
     .continue-btn:hover { background: var(--accent-dark); color: #fff; }
     .continue-btn.visible { display: inline-flex; }
+    .cb-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.78;
+    }
+    .cb-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
 
     /* ── Site stats strip ── */
     .site-stats {
@@ -382,12 +386,16 @@
       padding: 1.5rem 2rem 2.5rem;
       border-top: 1px solid var(--border);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+      flex-direction: column;
+      gap: 0.9rem;
       font-size: 0.8rem;
       color: var(--text-light);
+    }
+    .footer-credits {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
     .site-footer a { color: var(--text-muted); }
     .site-footer a:hover { color: var(--accent); }
@@ -414,17 +422,19 @@
     <span><strong id="stat-total-lessons">—</strong> lessons &amp; projects</span>
     <span><strong id="stat-submissions">0</strong> projects completed</span>
   </div>
-  <div class="repo-banner">
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-    Open source — <a href="https://github.com/SuperMo0/ai-engineering-curriculum" target="_blank" rel="noopener">contributions welcome</a> · lessons, fixes &amp; improvements
-  </div>
 </header>
 
 <main class="site-body" id="curriculum"></main>
 
 <footer class="site-footer">
-  <span>Curriculum inspired by the work of <a href="https://www.aihero.dev" target="_blank" rel="noopener">Matt Pocock</a> and <a href="https://www.daveebbelaar.com" target="_blank" rel="noopener">Dave Ebbelaar</a>.</span>
-  <span>Built in the spirit of <a href="https://www.theodinproject.com" target="_blank" rel="noopener">The Odin Project</a>.</span>
+  <div class="repo-banner">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    Open source — <a href="https://github.com/SuperMo0/ai-engineering-curriculum" target="_blank" rel="noopener">contributions welcome</a> &middot; lessons, fixes &amp; improvements
+  </div>
+  <div class="footer-credits">
+    <span>Curriculum inspired by the work of <a href="https://www.aihero.dev" target="_blank" rel="noopener">Matt Pocock</a> and <a href="https://www.daveebbelaar.com" target="_blank" rel="noopener">Dave Ebbelaar</a>.</span>
+    <span>Built in the spirit of <a href="https://www.theodinproject.com" target="_blank" rel="noopener">The Odin Project</a>.</span>
+  </div>
 </footer>
 
 <script type="module">
@@ -502,6 +512,15 @@
     if (firstIncomplete) {
       const btn = document.getElementById('continue-btn');
       btn.href = './' + firstIncomplete.file;
+      const label = document.createElement('span');
+      label.className = 'cb-label';
+      label.textContent = 'Continue →';
+      const title = document.createElement('span');
+      title.className = 'cb-title';
+      title.textContent = firstIncomplete.title;
+      btn.innerHTML = '';
+      btn.appendChild(label);
+      btn.appendChild(title);
       btn.classList.add('visible');
     }
 
