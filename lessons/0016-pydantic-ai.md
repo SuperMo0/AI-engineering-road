@@ -5,8 +5,8 @@ chapter: 2
 chapter_title: "AI System Design"
 title: "PydanticAI — type-safe AI workflows"
 description: "30–40 min read · Hands-on coding"
-prev: "0015-langchain-langgraph.html"
-prev_title: "LangChain and LangGraph — orchestration explained"
+prev: "0048-n8n-zapier.html"
+prev_title: "Visual AI workflows — n8n and Zapier"
 next: "0017-agents-from-scratch.html"
 next_title: "Agents from scratch — when frameworks get in the way"
 prereqs:

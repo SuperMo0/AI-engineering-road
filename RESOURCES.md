@@ -79,7 +79,14 @@ Specific aihero.dev articles that reference the Vercel AI SDK:
 
 ### Frameworks
 - LangGraph documentation — https://langchain-ai.github.io/langgraph/ (Additional Resources `0015`)
+- CrewAI documentation — https://docs.crewai.com/ (Additional Resources `0015`)
 - PydanticAI documentation — https://ai.pydantic.dev/ (Additional Resources `0016`)
+
+### Visual workflow tools (`0048`)
+- n8n vs Zapier comparison — https://blog.n8n.io/n8n-vs-zapier/ (Assignment article `0048` — **verify URL is live before publishing**)
+- n8n AI nodes docs — https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain/ (Additional Resources `0048`)
+- n8n self-hosting guide — https://docs.n8n.io/hosting/ (Additional Resources `0048`)
+- Zapier AI help — https://help.zapier.com/hc/en-us/categories/22022023-AI (Additional Resources `0048`)
 
 ---
 

@@ -55,7 +55,8 @@
           "id": "ch2-frameworks",
           "title": "Frameworks and agents",
           "items": [
-            { "id": "0015", "type": "lesson",          "title": "LangChain and LangGraph — orchestration explained",       "file": "lessons/0015-langchain-langgraph.html" },
+            { "id": "0015", "type": "lesson",          "title": "LangChain, LangGraph, and CrewAI — orchestration frameworks", "file": "lessons/0015-langchain-langgraph.html" },
+            { "id": "0048", "type": "lesson",          "title": "Visual AI workflows — n8n and Zapier",                   "file": "lessons/0048-n8n-zapier.html" },
             { "id": "0016", "type": "lesson",          "title": "PydanticAI — type-safe AI workflows",                    "file": "lessons/0016-pydantic-ai.html" },
             { "id": "0017", "type": "lesson",          "title": "Building agents from scratch — no framework needed",     "file": "lessons/0017-agents-from-scratch.html" },
             { "id": "P005", "type": "project",         "title": "Build a research agent from scratch",                    "file": "lessons/P005-agent-from-scratch.html" },
