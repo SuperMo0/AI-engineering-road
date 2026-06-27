@@ -114,8 +114,14 @@
           "items": [
             { "id": "0026", "type": "lesson", "title": "What is RAG and why LLMs need it", "file": "lessons/0026-what-is-rag.html" },
             { "id": "0027", "type": "lesson", "title": "Embeddings — turning text into numbers", "file": "lessons/0027-embeddings.html" },
-            { "id": "0028", "type": "lesson", "title": "Chunking strategies — splitting documents for retrieval", "file": "lessons/0028-chunking.html" }
+            { "id": "0028", "type": "lesson", "title": "Chunking strategies — splitting documents for retrieval", "file": "lessons/0028-chunking.html" },
+            { "id": "0029", "type": "lesson", "title": "Vector databases — storing and searching embeddings", "file": "lessons/0029-vector-databases.html" }
           ]
+        },
+        {
+          "id": "ch4-pipeline",
+          "title": "Building the pipeline",
+          "items": []
         }
       ]
     },
