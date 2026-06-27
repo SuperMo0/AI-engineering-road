@@ -107,8 +107,15 @@
       "number": 4,
       "title": "RAG & Vector Search",
       "goal": "Build a production RAG pipeline that connects an LLM to custom data, with measurable retrieval quality.",
-      "topics": [],
-      "status": "planned"
+      "topics": [
+        {
+          "id": "ch4-foundations",
+          "title": "RAG foundations",
+          "items": [
+            { "id": "0026", "type": "lesson", "title": "What is RAG and why LLMs need it", "file": "lessons/0026-what-is-rag.html" }
+          ]
+        }
+      ]
     },
     {
       "id": "ch5",
