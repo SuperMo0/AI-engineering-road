@@ -14,7 +14,7 @@ prereqs:
   - "[Lesson 4](0004-structured-outputs.html): Pydantic models, `.parse()`"
   - "[Lesson 5](0005-prompt-engineering.html): XML tags, system prompts"
   - "[Lesson 6](0006-advanced-prompting.html): temperature, cost tracking, retry logic"
-  - "Install: `uv add pypdf2` (for PDF reading)"
+  - "Install: `uv add pypdf` (for PDF reading — [pypdf](https://pypdf.readthedocs.io/en/stable/))"
 ---
 
 ## Overview
@@ -72,7 +72,7 @@ Cost: $0.000089 | Tokens: 1,243
 ## Requirements
 
 - Reads `.txt` files with standard `open()`
-- Reads `.pdf` files with `PyPDF2.PdfReader`
+- Reads `.pdf` files with `pypdf.PdfReader`
 - Rejects unsupported file types with a clear error message before calling the API
 - Uses a Pydantic model `DocumentSummary` with these fields:
   - `title`: str — inferred from content if not explicit

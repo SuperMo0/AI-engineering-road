@@ -49,6 +49,9 @@ additional_resources:
   - title: "Anthropic: Tool use"
     url: "https://docs.anthropic.com/en/docs/build-with-claude/tool-use"
     desc: "Claude's tool calling API; the request/response format differs from OpenAI's but the concept is identical"
+  - title: "Tool Calls with the Vercel AI SDK"
+    url: "https://www.aihero.dev/vercel-ai-sdk-tutorial"
+    desc: "How the Vercel AI SDK (TypeScript) handles tool definitions and execution — parallel to the Python patterns in this lesson"
 ---
 
 ## Motivation

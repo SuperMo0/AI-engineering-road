@@ -34,8 +34,8 @@ The Vercel AI SDK is a TypeScript/JavaScript library for building AI application
 
 Specific aihero.dev articles that reference the Vercel AI SDK:
 - System Prompts with Vercel AI SDK → Additional Resources in `0003` or `0005`
-- Structured Outputs with Vercel AI SDK → Additional Resources in `0004`
-- Tool Calls with Vercel AI SDK → Additional Resources in `0012`
+- Structured Outputs with Vercel AI SDK → **added to Additional Resources in `0004`** ✓
+- Tool Calls with Vercel AI SDK → **added to Additional Resources in `0012`** ✓
 
 ---
 
@@ -56,6 +56,9 @@ Specific aihero.dev articles that reference the Vercel AI SDK:
 ### OpenAI API
 - OpenAI Python SDK — https://github.com/openai/openai-python (Additional Resources `0002`)
 - OpenAI Cookbook — https://cookbook.openai.com/ (Additional Resources across Ch1)
+
+### OpenRouter (free API access alternative)
+- OpenRouter — https://openrouter.ai/ (covered in `0002` main body — free models + 50 free daily calls to any model, uses OpenAI SDK with `base_url` swap)
 
 ### Anthropic API
 - Anthropic Python SDK — https://github.com/anthropics/anthropic-sdk-python (Additional Resources `0007`)

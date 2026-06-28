@@ -3,7 +3,7 @@ layout: lesson
 lesson_id: "0004"
 chapter: 1
 chapter_title: "Foundations of AI Engineering"
-title: "Structured outputs and function calling"
+title: "Structured outputs"
 description: "30–40 min read · Hands-on coding"
 prev: "0003-chat-and-history.html"
 prev_title: "Conversations and chat history"
@@ -53,6 +53,9 @@ additional_resources:
   - title: "Pydantic documentation"
     url: "https://docs.pydantic.dev/latest/"
     desc: "Validators, field constraints (`Field(max_length=...)`), and model serialisation"
+  - title: "Structured Outputs with the Vercel AI SDK"
+    url: "https://www.aihero.dev/vercel-ai-sdk-tutorial"
+    desc: "How the Vercel AI SDK (TypeScript) handles structured outputs — useful if you work on TypeScript frontends alongside a Python backend"
 ---
 
 ## Motivation
@@ -62,6 +65,10 @@ Free-text LLM responses are useless to a program. If your backend asks a model t
 Structured outputs are what let you chain an LLM into a real system: extract a name → look it up in a database → send a reply. Every step expects a specific shape. This lesson teaches the standard approach used in 2026 production code.
 
 {% include prereqs.html %}
+
+<div class="callout info">
+<strong>What is "function calling"?</strong> You may see the term "function calling" in older OpenAI tutorials and blog posts. It was the original name for what OpenAI now calls <strong>tool calling</strong> — a separate feature where the model outputs a structured request to execute a function in your code. Tool calling is covered in full in <a href="0012-tool-calling.html">Lesson 12</a>. Structured outputs (this lesson) and tool calling are related but distinct: structured outputs constrain <em>any</em> model response to a schema; tool calling is specifically about the model requesting an action. You will often use them together.
+</div>
 
 ## Why free-text responses break production code {#why-free-text-breaks}
 

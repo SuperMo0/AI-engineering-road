@@ -11,8 +11,7 @@ next: "0003-chat-and-history.html"
 next_title: "Conversations and chat history"
 prereqs:
   - "[Lesson 1](0001-ai-dev-environment.html): uv project created, `openai` and `python-dotenv` installed, `.env` file set up"
-  - "A real OpenAI API key — sign up at [platform.openai.com](https://platform.openai.com) and create one under API Keys"
-  - "A small amount of API credit ($5 is more than enough for this entire chapter)"
+  - "**API access** — either an [OpenAI API key](https://platform.openai.com) (requires a small credit top-up) **or** a free [OpenRouter key](https://openrouter.ai/) — see the OpenRouter section in this lesson if you prefer to start without spending anything"
 assignment:
   article:
     title: "What Is an LLM?"
@@ -91,6 +90,44 @@ An **API** (Application Programming Interface) is a way for one piece of softwar
 The OpenAI API works the same way. Your Python code sends a request to OpenAI's servers. Those servers run the LLM, generate a response, and send it back to your code. The whole round trip takes one to five seconds for most requests.
 
 OpenAI's API is a standard web API — it works over HTTP, the same protocol your browser uses to load websites. The Python `openai` package is a library that handles all the HTTP details for you: it formats the request, sends it, waits for the response, and returns a clean Python object.
+
+## Free access with OpenRouter {#openrouter}
+
+Getting started requires API access, and every OpenAI account must be topped up with credit before the API works. For learning purposes, **OpenRouter** removes that barrier entirely.
+
+[OpenRouter](https://openrouter.ai/) is a service that routes your requests to hundreds of different LLMs — and it gives you two free options:
+
+1. **Free models** — a curated set of capable models (Llama, Qwen, Mistral variants and more) that carry a `:free` suffix and are permanently free with no daily cap.
+2. **50 free daily calls to any model** — including paid ones like GPT-4o and Claude, enough to complete every coding task in this curriculum.
+
+To set it up: sign up at [openrouter.ai](https://openrouter.ai/), go to **Models**, click **Quick Start**, and copy the code snippet. The pattern looks like this:
+
+```python
+from openai import OpenAI
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client = OpenAI(
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    base_url="https://openrouter.ai/api/v1",
+)
+```
+
+The `base_url` parameter is what makes this work. Instead of sending requests to OpenAI's servers, the `openai` library sends them to OpenRouter's servers — which speak the exact same API language and forward the call to whichever model you specify. Everything else you learn in this lesson — `messages`, `model`, reading responses, handling errors — is identical.
+
+Add your OpenRouter key to `.env`:
+
+```bash
+OPENROUTER_API_KEY=sk-or-v1-...
+```
+
+<div class="callout info">
+<strong>Model names on OpenRouter</strong> use a provider prefix: <code>openai/gpt-4o-mini</code>, <code>anthropic/claude-haiku-4-5</code>, <code>meta-llama/llama-3.3-70b-instruct:free</code>. Browse <a href="https://openrouter.ai/models">openrouter.ai/models</a> for the full list and look for the <strong>:free</strong> suffix to find permanently-free models.
+</div>
+
+The rest of this lesson shows the direct OpenAI setup. Both approaches are valid — if you have an OpenAI key use it directly; if you are just starting out and prefer not to add credit yet, use OpenRouter with the `base_url` swap above.
 
 ## Authentication — proving who you are {#authentication}
 

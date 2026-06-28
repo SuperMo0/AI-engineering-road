@@ -13,7 +13,7 @@ next_title: "LLM system types — pipelines, agents, RAG"
 prereqs:
   - "All of Chapter 1 complete: Lessons 1–7, 47 and Projects P001–P002"
   - "Both an OpenAI API key and an Anthropic API key in your `.env`"
-  - "Packages installed: `uv add openai anthropic pydantic python-dotenv pypdf2`"
+  - "Packages installed: `uv add openai anthropic pydantic python-dotenv pypdf` (PyPDF2 is deprecated — use `pypdf`)"
 ---
 
 ## Overview
