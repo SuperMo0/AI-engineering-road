@@ -11,7 +11,7 @@ prev_title: "Project: Agent from scratch"
 next: "0018-fastapi-basics.html"
 next_title: "Serving AI with FastAPI"
 prereqs:
-  - "All of Chapter 2 (Lessons 8–17) — this project integrates all of it"
+  - "All of Chapter 2 (Lessons 8–17, 50–51) — this project integrates all of it"
   - "P005 completed — the raw agent loop you built there is a sub-component of this system"
   - "A working search API — Tavily free tier recommended (tavily.com), or use a mock for offline testing"
 ---
@@ -20,12 +20,12 @@ prereqs:
 
 This is the Chapter 2 capstone. It integrates every pattern from the chapter into a single, deployable system that is demonstrably more powerful than a single LLM call:
 
-- **LLM router** (Lesson 14) — classifies incoming research queries
+- **LLM router** (Lesson 13) — classifies incoming research queries
 - **Parallel information gathering** (Lesson 11) — runs multiple searches concurrently
-- **Agentic loop** (Lesson 13) — iterates until enough evidence is gathered
-- **Evaluator-optimizer** (Lesson 14) — scores and improves the final report
+- **Agentic loop** (Lesson 14) — iterates until enough evidence is gathered
+- **Evaluator-optimizer** (Lesson 13) — scores and improves the final report
 - **Structured output** (Lesson 4) — produces a typed, well-formed report
-- **Orchestration** (Lesson 15 or 16) — the outer shell uses either LangGraph or PydanticAI (your choice)
+- **Orchestration** (Lesson 50 or 16) — the outer shell uses either LangGraph or PydanticAI (your choice)
 
 The finished system accepts a research question via CLI, runs a multi-step pipeline to gather and synthesise information, and produces a structured research report in both Markdown and JSON.
 

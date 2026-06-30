@@ -165,8 +165,20 @@
             {
               "id": "0017",
               "type": "lesson",
-              "title": "LangChain, LangGraph, and CrewAI — orchestration frameworks",
-              "file": "lessons/0017-langchain-langgraph.html"
+              "title": "LangChain — the agent framework",
+              "file": "lessons/0017-langchain.html"
+            },
+            {
+              "id": "0050",
+              "type": "lesson",
+              "title": "LangGraph — the agent runtime",
+              "file": "lessons/0050-langgraph.html"
+            },
+            {
+              "id": "0051",
+              "type": "lesson",
+              "title": "CrewAI — role-based multi-agent coordination",
+              "file": "lessons/0051-crewai.html"
             },
             {
               "id": "0048",

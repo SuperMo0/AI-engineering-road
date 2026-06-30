@@ -18,7 +18,7 @@ prereqs:
 
 ## Overview
 
-You have built the `Agent` class in Lesson 17. Now you will build a real research agent on top of it that can answer multi-hop questions requiring several chained searches and calculations. The agent must use the raw OpenAI SDK only — no LangChain, LangGraph, or PydanticAI.
+You have built the `Agent` class in Lesson 15. Now you will build a real research agent on top of it that can answer multi-hop questions requiring several chained searches and calculations. The agent must use the raw OpenAI SDK only — no LangChain, LangGraph, or PydanticAI.
 
 A **multi-hop question** is one that requires chaining lookups — you need the answer to step 1 to know what to search for in step 2. Example: "Who is the CEO of the company that makes the Vision Pro, and how long have they held that role?"
 
