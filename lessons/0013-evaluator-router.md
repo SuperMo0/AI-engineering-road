@@ -1,33 +1,27 @@
 ---
 layout: lesson
-lesson_id: "0014"
+lesson_id: "0013"
 chapter: 2
 chapter_title: "AI System Design"
 title: "Evaluator-optimizer and LLM routers"
 description: "35–40 min read · Hands-on coding"
-prev: "0013-agentic-loops.html"
-prev_title: "Agentic loops — letting the LLM decide what to do next"
-next: "P004-document-pipeline.html"
-next_title: "Project: Document pipeline"
+prev: "0012-tool-calling.html"
+prev_title: "Tool calling — giving your LLM hands"
+next: "0014-agentic-loops.html"
+next_title: "Agentic loops — letting the LLM decide what to do next"
 prereqs:
   - "[Lesson 11](0011-llm-chaining.html): chaining — both patterns are specialised chains"
   - "[Lesson 4](0004-structured-outputs.html): Pydantic structured outputs — both patterns depend on typed intermediate values"
 assignment:
-  article:
-    title: "Building Effective Agents"
-    url: "https://www.anthropic.com/engineering/building-effective-agents"
-    author: "Anthropic"
-    time: "about 10 minutes (sections \"Workflow: Evaluator-optimizer\" and \"Routing\" only)"
-    why: "Anthropic's production guidance on exactly these two patterns, with real criteria for when each one earns its added complexity."
   task:
-    description: "Build an LLM router for a multi-category content moderation system."
+    description: "Build an LLM router for a multi-category content moderation system with an evaluator-optimizer loop."
     steps:
-      - "Define a `ModerationDecision` Pydantic model with fields: `category` (Literal: \"safe\", \"spam\", \"hate\", \"misinformation\", \"adult\"), `action` (Literal: \"approve\", \"flag\", \"block\"), `confidence` (str), `reason` (str)"
-      - "Write a `moderate(text: str) -> ModerationDecision` function"
-      - "Test it with 8 text samples (2 safe, 2 spam, 2 borderline) and print each decision"
-      - "Add an evaluator-optimizer on top: if confidence is \"low\", run an evaluator LLM call that double-checks the decision and returns a revised one"
-    expected: "A table of results — text snippet, category, action, confidence, reason — for all 8 samples."
-    why: "Content moderation is one of the highest-volume, most financially-sensitive AI applications. Building a version from scratch gives you intuition for why the router + evaluator combination is standard practice in production."
+      - "Define a `ModerationDecision` Pydantic model with these typed fields: `category: Literal[\"safe\", \"spam\", \"hate\", \"misinformation\", \"adult\"]`, `action: Literal[\"approve\", \"flag\", \"block\"]`, `confidence: Literal[\"low\", \"medium\", \"high\"]`, `reason: str`"
+      - "Write a `moderate(text: str) -> ModerationDecision` function using `client.beta.chat.completions.parse()` with `response_format=ModerationDecision`"
+      - "Run `moderate()` on the 8 test samples provided in the **Test data** section at the bottom of this lesson — copy-paste them directly into your code"
+      - "Add the evaluator loop: if `decision.confidence == \"low\"`, make a second LLM call (the **evaluator**) that reviews the decision and returns a `feedback: str` explaining what is uncertain. Pass that feedback string back into a third call to the **generator** (the original `moderate()` prompt plus the feedback) to produce a revised `ModerationDecision`."
+    expected: "A printed table — text snippet, category, action, confidence, reason — for all 8 samples. Low-confidence decisions should show a second revised row marked `[revised]`."
+    why: "Content moderation is one of the highest-volume, most cost-sensitive AI applications. Building it from scratch — with routing and a refinement loop — gives you the intuition to design and debug these systems in production."
 knowledge_check:
   - q: "What two LLM calls does the evaluator-optimizer pattern use, and what does each one do?"
     a: "The **generator** produces a draft output. The **evaluator** scores that draft against specific criteria and provides actionable feedback. If the draft fails, the feedback is included in the next generator call. The loop repeats until the output passes or the iteration limit is reached."
@@ -42,9 +36,9 @@ knowledge_check:
     section: "#llm-routers"
     section_title: "LLM routers"
 additional_resources:
-  - title: "Building Effective Agents"
-    url: "https://www.anthropic.com/engineering/building-effective-agents"
-    desc: "Full article; covers orchestrator-subagent patterns and parallelization in addition to evaluator and routing"
+  - title: "GitHub Gists"
+    url: "https://gist.github.com"
+    desc: "Paste large blocks of text here and share the link — useful for testing your moderation system on longer documents without cluttering your source code"
 ---
 
 ## Motivation
@@ -235,3 +229,27 @@ In the Chapter Project (P006), the research assistant uses both:
 - An **evaluator-optimizer** scores the final report for factual grounding and completeness, and requests the sub-agent to retry if the score is below 7/10.
 
 Together they form a system where every request gets the right treatment and every output meets a quality bar — without human review in the loop.
+
+## Test data {#test-data}
+
+Use these 8 samples for the assignment. Copy the list directly into your script — no need to type test cases yourself.
+
+```python
+TEST_SAMPLES = [
+    # Safe
+    "I just finished reading a great book on machine learning fundamentals. Would recommend it to anyone getting started in AI engineering.",
+    "Does anyone know a good Python library for interactive data visualization? I've been using matplotlib but want something with hover tooltips.",
+
+    # Spam
+    "🎉 WINNER! You've been selected for a $5,000 prize! Click NOW before this offer expires in 10 MINUTES!!! Limited spots available!!!",
+    "Earn $800/day working from home — no experience needed. I made $14,000 last month with this one method. DM me for the free starter kit.",
+
+    # Hate speech
+    "People from [country] are all criminals and shouldn't be allowed to immigrate here. They're destroying our economy and culture.",
+    "I can't stand [religious group] — they're dangerous extremists and have no place in a civilized society.",
+
+    # Borderline / ambiguous
+    "This medication has serious undisclosed side effects that the pharmaceutical company is hiding to protect profits. My neighbour was seriously harmed.",
+    "The election results were obviously manipulated. Anyone who can't see the fraud is either uninformed or part of the cover-up.",
+]
+```

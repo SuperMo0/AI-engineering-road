@@ -6,13 +6,13 @@ chapter_title: "AI System Design"
 project_type: "Project"
 title: "Build a research agent from scratch — no framework"
 description: "Estimated time: 2–3 hours"
-prev: "0017-agents-from-scratch.html"
-prev_title: "Building agents from scratch — no framework needed"
+prev: "0048-n8n-zapier.html"
+prev_title: "Visual AI workflows — n8n and Zapier"
 next: "P006-ch2-research-assistant.html"
 next_title: "Chapter Project: Automated research assistant"
 prereqs:
-  - "[Lesson 17](0017-agents-from-scratch.html): the Agent class — use it as your starting point"
-  - "[Lesson 13](0013-agentic-loops.html): agentic loops — multi-hop reasoning is the primary use case"
+  - "[Lesson 15](0015-agents-from-scratch.html): the Agent class — use it as your starting point"
+  - "[Lesson 14](0014-agentic-loops.html): agentic loops — multi-hop reasoning is the primary use case"
   - "[Lesson 12](0012-tool-calling.html): tool calling — each tool must define a proper JSON Schema"
 ---
 

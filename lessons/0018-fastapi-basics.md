@@ -11,7 +11,7 @@ next: "0019-pydantic-validation.html"
 next_title: "Pydantic for input/output validation"
 prereqs:
   - "[Lesson 4](0004-structured-outputs.html): Pydantic BaseModel — you will use it for request and response shapes"
-  - "[Lesson 17](0017-agents-from-scratch.html): Chapter 2 complete — you have AI logic to wrap in an API"
+  - "[Lesson 15](0015-agents-from-scratch.html): Chapter 2 complete — you have AI logic to wrap in an API"
   - "Basic familiarity with HTTP concepts: what a request is, what a response is, what a status code means"
 assignment:
   article:

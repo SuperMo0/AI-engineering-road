@@ -7,8 +7,8 @@ title: "Tool calling — giving your LLM hands"
 description: "35–45 min read · Hands-on coding"
 prev: "0011-llm-chaining.html"
 prev_title: "LLM call chaining and parallelization"
-next: "0013-agentic-loops.html"
-next_title: "Agentic loops"
+next: "0013-evaluator-router.html"
+next_title: "Evaluator-optimizer and LLM routers"
 prereqs:
   - "[Lesson 2](0002-openai-api-basics.html): the messages list, reading responses"
   - "[Lesson 3](0003-chat-and-history.html): appending messages to history — tool calling extends this pattern"
@@ -257,14 +257,19 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import openai
 from pydantic import BaseModel, Field
+from ddgs import DDGS
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ── Tool implementations ──────────────────────────────────────
-def search_web(query: str) -> str:
-    # In production: call Tavily, Serper, or similar
-    return f"[Mock search results for '{query}': No real results in this demo]"
+def search_web(query: str, max_results: int = 5) -> str:
+    with DDGS() as ddgs:
+        results = list(ddgs.text(query, max_results=max_results))
+    if not results:
+        return "No results found."
+    lines = [f"Title: {r['title']}\nURL: {r['href']}\nSnippet: {r['body']}" for r in results]
+    return "\n\n".join(lines)
 
 def calculate(expression: str) -> str:
     try:
@@ -331,4 +336,61 @@ if __name__ == "__main__":
     print(ask("What is 1234 * 5678, and what is today's date?"))
 ```
 
-The `while True` loop is the beginning of an agentic loop — the model can call as many tools as needed before producing a final answer. Lesson 13 formalises this pattern and adds the safety controls it needs in production.
+The `while True` loop is the beginning of an agentic loop — the model can call as many tools as needed before producing a final answer. The next lesson formalises this pattern and adds the safety controls it needs in production.
+
+## Web search and text extraction {#web-search}
+
+The `search_web` tool in the example above uses **ddgs** — the official Python package for DuckDuckGo Search. It requires no API key, no account, and no configuration:
+
+```bash
+uv add ddgs trafilatura
+```
+
+`ddgs.text()` returns a list of result dicts. Each has three keys you care about:
+
+```python
+{
+    "title":  "The page title",
+    "href":   "https://example.com/the-url",
+    "body":   "A short snippet of the page content"
+}
+```
+
+The snippet (`body`) is enough for many use cases. But when you need the full article text — for a summarisation tool, a RAG ingestion step, or a deep research agent — pass the URL to **Trafilatura**, which downloads the page and strips out navigation, ads, and boilerplate:
+
+```python
+import trafilatura
+
+def fetch_page_text(url: str) -> str:
+    """Download a URL and extract clean article text."""
+    downloaded = trafilatura.fetch_url(url)
+    text = trafilatura.extract(downloaded)
+    return text or f"[Could not extract text from {url}]"
+```
+
+A typical agent pattern combines both: search first to find relevant URLs, then fetch the top result for full content:
+
+```python
+def research(topic: str) -> str:
+    # Step 1: find relevant pages
+    results_text = search_web(topic, max_results=3)
+    # Parse the first URL out of the results
+    first_url = results_text.split("URL: ")[1].split("\n")[0]
+    # Step 2: get the full article
+    return fetch_page_text(first_url)
+```
+
+## Choosing a search backend {#choosing-search-backend}
+
+Three options appear in real AI engineering stacks. Here is when to use each:
+
+| | **ddgs** | **Tavily** | **Google Custom Search** |
+|---|---|---|---|
+| API key | None | Required | Required + GCP console |
+| Cost | Free | Free tier, then paid | Paid per query |
+| Setup | `uv add ddgs` | Sign up + set key | Cloud console + credentials |
+| Results | DuckDuckGo index | AI-optimized for agents | Google index |
+| Rate limits | Soft (no hard quota) | Plan-based | Strict quota |
+| Best for | Development, prototypes, tools that don't need a key | Production agents where search quality is critical | Enterprise with existing GCP contracts |
+
+**Use ddgs while learning and building.** It runs with zero setup and teaches the tool-calling pattern without API key friction. When you ship an agent to production and search quality becomes critical, evaluate Tavily — it returns cleaner, more agent-friendly results and supports filtering by domain, date, and content type.

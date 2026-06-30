@@ -1,12 +1,12 @@
 ---
 layout: lesson
-lesson_id: "0015"
+lesson_id: "0017"
 chapter: 2
 chapter_title: "AI System Design"
 title: "LangChain, LangGraph, and CrewAI — orchestration frameworks"
 description: "40–50 min read · Hands-on coding"
-prev: "P004-document-pipeline.html"
-prev_title: "Project: Document pipeline"
+prev: "0016-pydantic-ai.html"
+prev_title: "PydanticAI — type-safe AI workflows"
 next: "0048-n8n-zapier.html"
 next_title: "Visual AI workflows — n8n and Zapier"
 prereqs:
@@ -264,6 +264,94 @@ The `context=[research_task]` parameter is how agents share results — the writ
 Choose **CrewAI** when you have distinct specialist roles that naturally hand off work — a researcher, a critic, a writer, a planner. The role-based model maps well onto real team structures and is easy to reason about.
 
 Choose **LangGraph** when you need precise control over branching, retries, and state. CrewAI is harder to customise at the loop level; LangGraph gives you full visibility into every transition.
+
+## The tool ecosystem: LangChain, CrewAI, and Composio {#tool-ecosystem}
+
+In Lesson 12 you built tools from scratch — a raw JSON Schema definition wired to a Python function. Every framework in this lesson wraps that same idea, but adds a layer that makes tools easier to discover, validate, and reuse.
+
+### LangChain tools: `@tool` vs `BaseTool`
+
+LangChain provides two ways to define a tool. The `@tool` decorator is the quick option — it wraps any function and uses the docstring as the tool description:
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def search_web(query: str) -> str:
+    """Search the web for current information. Use for recent events or facts."""
+    with DDGS() as ddgs:
+        results = list(ddgs.text(query, max_results=5))
+    return "\n".join(r["body"] for r in results)
+```
+
+The `BaseTool` subclass gives more control — useful when you need custom error handling, async support, or metadata:
+
+```python
+from langchain_core.tools import BaseTool
+from pydantic import BaseModel, Field
+
+class SearchInput(BaseModel):
+    query: str = Field(description="The search query")
+
+class WebSearchTool(BaseTool):
+    name: str = "search_web"
+    description: str = "Search the web for current information."
+    args_schema: type[BaseModel] = SearchInput
+
+    def _run(self, query: str) -> str:
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=5))
+        return "\n".join(r["body"] for r in results)
+```
+
+Use `@tool` for most cases. Reach for `BaseTool` when you need the tool to carry state, handle errors differently, or plug into a tool registry.
+
+### CrewAI built-in tools
+
+CrewAI ships a library of pre-built tools so you do not have to write common integrations from scratch. Notable examples:
+
+```python
+from crewai_tools import SerperDevTool, FileReadTool, ScrapeWebsiteTool
+
+# Web search (requires a Serper API key)
+search_tool = SerperDevTool()
+
+# Read a local file
+file_tool = FileReadTool(file_path="./data/report.txt")
+
+# Scrape and return the text content of any URL
+scrape_tool = ScrapeWebsiteTool()
+
+researcher = Agent(
+    role="Researcher",
+    goal="Find accurate information on the given topic",
+    tools=[search_tool, scrape_tool],
+    llm="gpt-4o-mini",
+)
+```
+
+The tool is assigned to an agent, not the crew — each agent only sees the tools relevant to its role.
+
+### Composio — 1000+ production connectors
+
+[Composio](https://composio.dev) is a connector framework that gives your agents access to external services — GitHub, Notion, Slack, Gmail, Linear, and hundreds more — through a single, authentication-managed interface. Instead of writing OAuth flows and API wrappers yourself, you install a connector and hand it to your agent as a tool:
+
+```python
+from composio_langchain import ComposioToolSet, Action
+
+toolset = ComposioToolSet()
+github_tools = toolset.get_tools(actions=[
+    Action.GITHUB_CREATE_ISSUE,
+    Action.GITHUB_LIST_PULL_REQUESTS,
+])
+
+# Use with LangChain or CrewAI as normal tools
+agent = create_react_agent(llm, tools=github_tools)
+```
+
+Composio handles authentication once (via `composio login`), then every agent in your system can use those connectors without storing tokens in your code.
+
+**When Composio earns its place:** building an AI assistant that takes actions across real SaaS products (create a GitHub issue, send a Slack message, update a Notion page). For pure data-retrieval tools like web search, rolling your own with ddgs is simpler.
 
 ## When to use a framework vs raw API {#when-framework}
 

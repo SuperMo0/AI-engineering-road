@@ -129,14 +129,14 @@
             {
               "id": "0013",
               "type": "lesson",
-              "title": "Agentic loops — letting the LLM decide what to do next",
-              "file": "lessons/0013-agentic-loops.html"
+              "title": "Evaluator-optimizer and LLM routers",
+              "file": "lessons/0013-evaluator-router.html"
             },
             {
               "id": "0014",
               "type": "lesson",
-              "title": "Evaluator-optimizer and LLM routers",
-              "file": "lessons/0014-evaluator-router.html"
+              "title": "Agentic loops — letting the LLM decide what to do next",
+              "file": "lessons/0014-agentic-loops.html"
             },
             {
               "id": "P004",
@@ -153,14 +153,8 @@
             {
               "id": "0015",
               "type": "lesson",
-              "title": "LangChain, LangGraph, and CrewAI — orchestration frameworks",
-              "file": "lessons/0015-langchain-langgraph.html"
-            },
-            {
-              "id": "0048",
-              "type": "lesson",
-              "title": "Visual AI workflows — n8n and Zapier",
-              "file": "lessons/0048-n8n-zapier.html"
+              "title": "Building agents from scratch — no framework needed",
+              "file": "lessons/0015-agents-from-scratch.html"
             },
             {
               "id": "0016",
@@ -171,8 +165,14 @@
             {
               "id": "0017",
               "type": "lesson",
-              "title": "Building agents from scratch — no framework needed",
-              "file": "lessons/0017-agents-from-scratch.html"
+              "title": "LangChain, LangGraph, and CrewAI — orchestration frameworks",
+              "file": "lessons/0017-langchain-langgraph.html"
+            },
+            {
+              "id": "0048",
+              "type": "lesson",
+              "title": "Visual AI workflows — n8n and Zapier",
+              "file": "lessons/0048-n8n-zapier.html"
             },
             {
               "id": "P005",

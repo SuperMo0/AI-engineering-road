@@ -6,10 +6,10 @@ chapter_title: "AI System Design"
 project_type: "Project"
 title: "Build a multi-step document processing pipeline"
 description: "Estimated time: 3–4 hours"
-prev: "0014-evaluator-router.html"
-prev_title: "Evaluator-optimizer and LLM routers"
-next: "0015-langchain-langgraph.html"
-next_title: "LangChain and LangGraph — orchestration explained"
+prev: "0014-agentic-loops.html"
+prev_title: "Agentic loops — letting the LLM decide what to do next"
+next: "0015-agents-from-scratch.html"
+next_title: "Building agents from scratch — no framework needed"
 prereqs:
   - "Lessons 11–14: chaining, parallelization, tool calling, evaluator-optimizer, LLM routers"
   - "Chapter 1 Project P002: document summarizer (reuse file-reading code)"
@@ -27,7 +27,7 @@ The pipeline accepts one or more raw text documents, runs them through a series 
 
 Each document passes through these steps in order:
 
-1. **Ingest:** read file from disk (.txt or .pdf), count words, detect language (code — no LLM)
+1. **Ingest:** read file from disk (.txt or .pdf), count words, detect language using the `langdetect` package (pure code — no LLM)
 2. **Extract:** LLM call — extract named entities (people, organisations, dates, amounts) as structured output
 3. **Classify:** LLM router — classify document type and route to the appropriate summariser
 4. **Summarise:** Specialist LLM call matched to document type (legal/financial/general), with evaluator ensuring summary passes a quality bar (score ≥ 7/10)
@@ -37,28 +37,30 @@ Steps 1–5 run in sequence per document. Multiple documents are processed in **
 
 ## Output schema
 
-Each output JSON file must match this Pydantic model:
+`DocumentIntelligence` is the **pipeline state object** — it is created in Step 1 (Ingest) and passed through every subsequent step, with each step filling in more fields. The final object is serialised to JSON in Step 5 (Emit).
+
+`Entities` is a **nested model** inside `DocumentIntelligence`. Define it first, then reference it as the type of the `entities` field. The printed output at the end is just the single `DocumentIntelligence` JSON — not a separate `Entities` object.
 
 ```python
 from pydantic import BaseModel
 from typing import Optional
 
-class Entities(BaseModel):
+class Entities(BaseModel):          # nested — used as a field type below
     people: list[str]
     organisations: list[str]
     dates: list[str]
     monetary_amounts: list[str]
 
-class DocumentIntelligence(BaseModel):
+class DocumentIntelligence(BaseModel):   # pipeline state — populated step by step
     filename: str
     word_count: int
     language: str
-    document_type: str         # from router
-    entities: Entities
-    summary: str               # evaluated and approved
+    document_type: str         # filled by Step 3 (router)
+    entities: Entities         # filled by Step 2 (extract) — Entities is nested here
+    summary: str               # filled by Step 4 (summarise, evaluator-approved)
     summary_score: int         # evaluator's final score (1–10)
     key_points: list[str]
-    risk_flags: list[str]      # empty if none detected
+    risk_flags: list[str]      # empty list if none detected
     processing_time_s: float
 ```
 

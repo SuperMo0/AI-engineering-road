@@ -5,13 +5,13 @@ chapter: 2
 chapter_title: "AI System Design"
 title: "Visual AI workflows — n8n and Zapier"
 description: "30–40 min read · Hands-on setup"
-prev: "0015-langchain-langgraph.html"
+prev: "0017-langchain-langgraph.html"
 prev_title: "LangChain, LangGraph, and CrewAI — orchestration frameworks"
-next: "0016-pydantic-ai.html"
-next_title: "PydanticAI — type-safe AI workflows"
+next: "P005-agent-from-scratch.html"
+next_title: "Project: Build a research agent from scratch"
 prereqs:
-  - "[Lesson 13](0013-agentic-loops.html): agentic loops — you understand what a workflow is and why you'd chain LLM calls"
-  - "[Lesson 15](0015-langchain-langgraph.html): LangGraph and CrewAI — you know where visual tools fit on the orchestration spectrum"
+  - "[Lesson 14](0014-agentic-loops.html): agentic loops — you understand what a workflow is and why you'd chain LLM calls"
+  - "[Lesson 17](0017-langchain-langgraph.html): LangGraph and CrewAI — you know where visual tools fit on the orchestration spectrum"
   - "Docker installed — used to run n8n locally (see [Lesson 1](0001-ai-dev-environment.html))"
   - "An OpenAI API key in your environment"
 assignment:

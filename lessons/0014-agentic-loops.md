@@ -1,14 +1,14 @@
 ---
 layout: lesson
-lesson_id: "0013"
+lesson_id: "0014"
 chapter: 2
 chapter_title: "AI System Design"
 title: "Agentic loops — letting the LLM decide what to do next"
 description: "35–45 min read · Hands-on coding"
-prev: "0012-tool-calling.html"
-prev_title: "Tool calling — giving your LLM hands"
-next: "0014-evaluator-router.html"
-next_title: "Evaluator-optimizer and routers"
+prev: "0013-evaluator-router.html"
+prev_title: "Evaluator-optimizer and LLM routers"
+next: "P004-document-pipeline.html"
+next_title: "Project: Document pipeline"
 prereqs:
   - "[Lesson 12](0012-tool-calling.html): the two-phase tool call exchange — the agentic loop extends this pattern"
   - "[Lesson 11](0011-llm-chaining.html): chaining — you need to understand what an agent replaces and when"

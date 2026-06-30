@@ -5,13 +5,13 @@ chapter: 2
 chapter_title: "AI System Design"
 title: "PydanticAI — type-safe AI workflows"
 description: "30–40 min read · Hands-on coding"
-prev: "0048-n8n-zapier.html"
-prev_title: "Visual AI workflows — n8n and Zapier"
-next: "0017-agents-from-scratch.html"
-next_title: "Agents from scratch — when frameworks get in the way"
+prev: "0015-agents-from-scratch.html"
+prev_title: "Building agents from scratch — no framework needed"
+next: "0017-langchain-langgraph.html"
+next_title: "LangChain, LangGraph, and CrewAI — orchestration frameworks"
 prereqs:
   - "[Lesson 4](0004-structured-outputs.html): Pydantic BaseModel — PydanticAI extends this"
-  - "[Lesson 13](0013-agentic-loops.html): agentic loops — PydanticAI agents implement this pattern"
+  - "[Lesson 14](0014-agentic-loops.html): agentic loops — PydanticAI agents implement this pattern"
   - "Install: `uv add pydantic-ai`"
 assignment:
   article:

@@ -1,18 +1,18 @@
 ---
 layout: lesson
-lesson_id: "0017"
+lesson_id: "0015"
 chapter: 2
 chapter_title: "AI System Design"
 title: "Building agents from scratch — no framework needed"
 description: "35–45 min read · Hands-on coding"
-prev: "0016-pydantic-ai.html"
-prev_title: "PydanticAI — type-safe AI workflows"
-next: "P005-agent-from-scratch.html"
-next_title: "Project: Agent from scratch"
+prev: "P004-document-pipeline.html"
+prev_title: "Project: Multi-step document processing pipeline"
+next: "0016-pydantic-ai.html"
+next_title: "PydanticAI — type-safe AI workflows"
 prereqs:
   - "[Lesson 12](0012-tool-calling.html): tool calling — the agent loop is built on the two-phase tool exchange"
-  - "[Lesson 13](0013-agentic-loops.html): agentic loops and the ReAct pattern"
-  - "[Lesson 14](0014-evaluator-router.html): evaluator-optimizer and routers — both appear as sub-components of an agent"
+  - "[Lesson 14](0014-agentic-loops.html): agentic loops and the ReAct pattern"
+  - "[Lesson 13](0013-evaluator-router.html): evaluator-optimizer and routers — both appear as sub-components of an agent"
 assignment:
   article:
     title: "Learning About AI Agents"
@@ -54,7 +54,7 @@ additional_resources:
 
 ## Motivation
 
-LangGraph, PydanticAI, and every other framework you have seen are built on top of the same raw API calls you have been writing since Lesson 2. Knowing what those frameworks do under the hood — and being able to reproduce it without them — makes you a better engineer and a better debugger. When a framework behaves unexpectedly, engineers who know the underlying loop fix the problem in minutes. Engineers who only know the framework spend hours.
+LangGraph, PydanticAI, and CrewAI — the orchestration frameworks you will explore in the next lessons — are built on top of the same raw API calls you have been writing since Lesson 2. Before you meet those frameworks, it pays to build what they build, by hand, once. That way you will know exactly what heavy lifting they are doing for you, and when a framework behaves unexpectedly, you will be able to reason about what is happening underneath rather than guessing.
 
 This lesson walks through a complete, production-shaped agent implementation in plain Python with nothing but the OpenAI SDK and Pydantic — the exact foundation every agent framework builds on.
 
