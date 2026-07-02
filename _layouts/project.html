@@ -15,7 +15,7 @@ layout: default
   </nav>
 
   <header class="lesson-header">
-    <p class="lesson-meta">Chapter {{ page.chapter }} · <span class="project-badge">{{ page.project_type | default: 'Project' }}</span></p>
+    <p class="lesson-meta">Chapter {{ page.chapter }} · <span class="project-badge{% if page.project_type == 'Chapter Project' %} chapter-project-badge{% endif %}">{{ page.project_type | default: 'Project' }}</span></p>
     <h1>{{ page.title }}</h1>
     {% if page.description %}<p class="lesson-desc">{{ page.description }}</p>{% endif %}
   </header>
@@ -51,8 +51,10 @@ layout: default
 <script type="module">
   import { initMarkComplete } from '{{ "/assets/progress.js" | relative_url }}';
   import { initThemeToggle } from '{{ "/assets/theme.js" | relative_url }}';
+  import { initChecklists } from '{{ "/assets/checklist.js" | relative_url }}';
   initMarkComplete('{{ page.lesson_id }}');
   initThemeToggle();
+  initChecklists('{{ page.lesson_id }}');
 
   // ── Heading anchors + TOC ──────────────────────────────────────
   function slugify(text) {

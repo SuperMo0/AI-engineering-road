@@ -10,42 +10,36 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <style>
     :root {
-      --text: #1c1917;
-      --text-muted: #78716c;
-      --text-light: #a8a29e;
-      --bg: #faf8f5;
-      --bg-alt: #f0ede8;
-      --bg-hover: #e8e3dc;
-      --border: #e5e0d8;
-      --accent: #009485;
-      --accent-dark: #007a6e;
-      --success: #16a34a;
-      --success-bg: #dcfce7;
-      --success-fg: #15803d;
-      --project-bg: #ede9fe;
-      --project-fg: #6d28d9;
-      --lesson-bg: #ccf0ec;
-      --lesson-fg: #007a6e;
+      --heading: #586e75;
+      --text: #657b83;
+      --text-muted: #839496;
+      --text-light: #93a1a1;
+      --bg: #fdf6e3;
+      --bg-alt: #eee8d5;
+      --bg-hover: #e4dcc0;
+      --border: #ddd6c1;
+      --accent: #2aa198;
+      --accent-dark: #1c7b74;
+      --accent-bg: #d9f0ee;
+      --secondary: #b58900;
+      --secondary-bg: #f5efd9;
       --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     html.dark {
-      --text: #e2e8f0;
-      --text-muted: #94a3b8;
-      --text-light: #64748b;
-      --bg: #1f1f1e;
-      --bg-alt: #2a2a28;
-      --bg-hover: #333331;
-      --border: #3a3a38;
-      --accent: #009485;
-      --accent-dark: #00c4b0;
-      --success: #4ade80;
-      --success-bg: #052e16;
-      --success-fg: #4ade80;
-      --project-bg: #1e1b4b;
-      --project-fg: #a78bfa;
-      --lesson-bg: #0a2420;
-      --lesson-fg: #009485;
+      --heading: #93a1a1;
+      --text: #839496;
+      --text-muted: #657b83;
+      --text-light: #586e75;
+      --bg: #002b36;
+      --bg-alt: #073642;
+      --bg-hover: #0f4552;
+      --border: #0a4a58;
+      --accent: #2aa198;
+      --accent-dark: #4cc9bd;
+      --accent-bg: #0d2b2a;
+      --secondary: #b58900;
+      --secondary-bg: #2b2410;
     }
 
     *,
@@ -56,6 +50,10 @@
       padding: 0;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       font-family: var(--font-ui);
       font-size: 16px;
@@ -63,6 +61,9 @@
       color: var(--text);
       background: var(--bg);
       transition: background 0.2s, color 0.2s;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* ── Theme toggle ── */
@@ -149,6 +150,7 @@
       font-weight: 700;
       margin-bottom: 0.4rem;
       letter-spacing: -0.02em;
+      color: var(--heading);
     }
 
     .site-header p {
@@ -157,31 +159,13 @@
       max-width: 560px;
     }
 
-    /* ── GitHub / repo banner ── */
-    .repo-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.8rem;
-      color: var(--text-light);
-    }
-
-    .repo-banner a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .repo-banner a:hover {
-      text-decoration: underline;
-    }
-
     /* ── Progress bar ── */
     .progress-bar-wrap {
       margin-top: 1.5rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
       font-size: 0.85rem;
       color: var(--text-muted);
     }
@@ -198,7 +182,7 @@
     .progress-bar-fill {
       width: 0;
       height: 100%;
-      background: var(--success);
+      background: var(--accent);
       border-radius: 3px;
       transition: width 0.3s;
     }
@@ -206,8 +190,10 @@
     /* ── Main layout ── */
     .site-body {
       max-width: 960px;
+      width: 100%;
       margin: 0 auto;
       padding: 2rem 2rem 4rem;
+      flex: 1;
     }
 
     /* ── Chapter card ── */
@@ -250,7 +236,7 @@
     .chapter-title {
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--text);
+      color: var(--heading);
       flex: 1;
     }
 
@@ -329,14 +315,14 @@
       align-items: center;
       justify-content: center;
       font-size: 0.6rem;
-      color: var(--success);
+      color: var(--accent-dark);
       background: var(--bg);
       transition: border-color 0.15s, background 0.15s;
     }
 
     .item.done .item-check {
-      border-color: var(--success);
-      background: var(--success-bg);
+      border-color: var(--accent-dark);
+      background: var(--accent-bg);
     }
 
     .item-badge {
@@ -350,18 +336,18 @@
     }
 
     .badge-lesson {
-      background: var(--lesson-bg);
-      color: var(--lesson-fg);
+      background: var(--bg-alt);
+      color: var(--text-muted);
     }
 
     .badge-project {
-      background: var(--success-bg);
-      color: var(--success-fg);
+      background: var(--accent-bg);
+      color: var(--accent-dark);
     }
 
     .badge-chapter-project {
-      background: var(--project-bg);
-      color: var(--project-fg);
+      background: var(--secondary-bg);
+      color: var(--secondary);
     }
 
     .item-link {
@@ -412,6 +398,16 @@
       text-decoration: underline;
     }
 
+    .repo-icon-link {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .repo-icon-link:hover {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
     /* ── Continue button ── */
     .continue-btn {
       display: none;
@@ -424,7 +420,6 @@
       border-radius: 4px;
       padding: 0.38rem 0.9rem 0.42rem;
       transition: background 0.15s;
-      max-width: 220px;
     }
 
     .continue-btn:hover {
@@ -447,10 +442,7 @@
     .cb-title {
       font-size: 0.8rem;
       font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 200px;
+      max-width: min(420px, 100%);
     }
 
     /* ── Site stats strip ── */
@@ -524,10 +516,13 @@
 
   <footer class="site-footer">
     <div class="repo-banner">
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-        <path
-          d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-      </svg>
+      <a class="repo-icon-link" href="https://github.com/SuperMo0/ai-engineering-curriculum" target="_blank"
+        rel="noopener" aria-label="View source on GitHub">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+        </svg>
+      </a>
       Open source — <a href="https://github.com/SuperMo0/ai-engineering-curriculum" target="_blank"
         rel="noopener">contributions welcome</a> &middot; lessons, fixes &amp; improvements
     </div>

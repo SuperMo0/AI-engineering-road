@@ -3,23 +3,31 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* Solarized-inspired palette (Ethan Schoonover) — colors chosen for
+   low eye strain via calibrated, muted contrast rather than
+   pure-black/pure-white extremes. Only two hues are used across the
+   whole site — primary (--accent, teal) and secondary (--secondary,
+   gold) — each with a light tint (for fills/badges) and a dark/bright
+   variant (for hover and emphasis). Everything else is neutral gray.
+   The same hex values are reused across both themes since Solarized
+   calibrates each accent to read clearly on both the lightest and
+   darkest backgrounds. */
+
 :root {
-  --text:           #1c1917;
-  --text-muted:     #78716c;
-  --text-light:     #a8a29e;
-  --bg:             #faf8f5;
-  --bg-alt:         #f0ede8;
-  --bg-code:        #f5f2ee;
-  --accent:         #009485;
-  --accent-dark:    #007a6e;
-  --success:        #16a34a;
-  --success-bg:     #dcfce7;
-  --warning:        #c2820a;
-  --border:         #e5e0d8;
-  --project-fg:     #6d28d9;
-  --project-bg:     #ede9fe;
-  --assignment-bg:  #f5f0e8;
-  --assignment-bdr: #d5c9b5;
+  --heading:        #586e75; /* base01 — emphasized content, for headings */
+  --text:           #657b83; /* base00 — default body content */
+  --text-muted:     #839496; /* base0  — secondary text */
+  --text-light:     #93a1a1; /* base1  — least prominent text */
+  --bg:             #fdf6e3; /* base3 */
+  --bg-alt:         #eee8d5; /* base2 */
+  --bg-code:        #eee8d5; /* base2 */
+  --border:         #ddd6c1;
+  --accent:         #2aa198; /* primary — cyan */
+  --accent-dark:    #1c7b74; /* primary, dark variant */
+  --accent-bg:      #d9f0ee; /* primary, light tint */
+  --secondary:      #b58900; /* secondary — gold */
+  --secondary-bg:   #f5efd9; /* secondary, light tint */
+  --secondary-bdr:  #d3c7a0; /* secondary, mid tint */
   --font-body:      'Inter', system-ui, -apple-system, sans-serif;
   --font-ui:        'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:      'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
@@ -30,22 +38,20 @@
 /* ── Dark theme ───────────────────────────────────────────────── */
 
 html.dark {
-  --text:           #e2e8f0;
-  --text-muted:     #94a3b8;
-  --text-light:     #64748b;
-  --bg:             #1f1f1e;
-  --bg-alt:         #2a2a28;
-  --bg-code:        #252523;
-  --accent:         #009485;
-  --accent-dark:    #00c4b0;
-  --success:        #4ade80;
-  --success-bg:     #052e16;
-  --warning:        #fbbf24;
-  --border:         #3a3a38;
-  --project-fg:     #a78bfa;
-  --project-bg:     #1e1b4b;
-  --assignment-bg:  #1a1a0e;
-  --assignment-bdr: #6b5010;
+  --heading:        #93a1a1; /* base1  — emphasized content, brighter than body */
+  --text:           #839496; /* base0  — default body content (muted, not glaring) */
+  --text-muted:     #657b83; /* base00 */
+  --text-light:     #586e75; /* base01 — least prominent text */
+  --bg:             #002b36; /* base03 */
+  --bg-alt:         #073642; /* base02 */
+  --bg-code:        #073642; /* base02 */
+  --border:         #0a4a58;
+  --accent:         #2aa198; /* primary — cyan */
+  --accent-dark:    #4cc9bd; /* primary, bright variant */
+  --accent-bg:      #0d2b2a; /* primary, dark tint */
+  --secondary:      #b58900; /* secondary — gold */
+  --secondary-bg:   #2b2410; /* secondary, dark tint */
+  --secondary-bdr:  #5c4a12; /* secondary, mid tint */
 }
 
 /* ── Theme toggle ─────────────────────────────────────────────── */
@@ -141,7 +147,7 @@ body {
   font-size: 2rem;
   font-weight: normal;
   line-height: 1.25;
-  color: var(--text);
+  color: var(--heading);
 }
 
 /* ── Typography ───────────────────────────────────────────────── */
@@ -150,7 +156,7 @@ h2 {
   font-size: 1.35rem;
   font-weight: normal;
   margin: 2.5rem 0 0.75rem;
-  color: var(--text);
+  color: var(--heading);
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.25rem;
 }
@@ -159,7 +165,7 @@ h3 {
   font-size: 1.1rem;
   font-weight: bold;
   margin: 2rem 0 0.5rem;
-  color: var(--text);
+  color: var(--heading);
 }
 
 p {
@@ -182,6 +188,47 @@ ul, ol {
 }
 
 li { margin-bottom: 0.35rem; }
+
+/* ── Interactive checklists (Markdown task lists) ─────────────────── */
+
+ul.checklist {
+  list-style: none;
+  padding-left: 0;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.checklist-item:last-child { border-bottom: none; }
+
+.checklist-item:hover { background: var(--bg-alt); }
+
+.checklist-item input[type="checkbox"] {
+  margin-top: 0.2rem;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.checklist-item.checked {
+  color: var(--text-muted);
+}
+
+.checklist-item p { margin: 0; }
 
 strong { font-weight: bold; }
 em { font-style: italic; }
@@ -277,8 +324,8 @@ tr:last-child td { border-bottom: none; }
 /* ── Assignment section ───────────────────────────────────────── */
 
 .assignment {
-  background: var(--assignment-bg);
-  border: 1px solid var(--assignment-bdr);
+  background: var(--secondary-bg);
+  border: 1px solid var(--secondary-bdr);
   border-radius: 4px;
   padding: 1.5rem 1.75rem;
   margin: 2.5rem 0;
@@ -290,7 +337,7 @@ tr:last-child td { border-bottom: none; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--warning);
+  color: var(--secondary);
   border: none;
   margin: 0 0 1rem;
   padding: 0;
@@ -445,11 +492,11 @@ tr:last-child td { border-bottom: none; }
 .btn-complete:hover { background: var(--accent-dark); }
 
 .btn-complete.completed {
-  background: var(--success);
+  background: var(--accent-dark);
   cursor: default;
 }
 
-.btn-complete.completed:hover { background: var(--success); }
+.btn-complete.completed:hover { background: var(--accent-dark); }
 
 /* ── Lesson nav (prev/next) ───────────────────────────────────── */
 
@@ -475,9 +522,9 @@ tr:last-child td { border-bottom: none; }
 
 .project-badge {
   display: inline-block;
-  background: #dcfce7;
-  color: #15803d;
-  border: 1px solid #86efac;
+  background: var(--accent-bg);
+  color: var(--accent-dark);
+  border: 1px solid var(--accent-dark);
   border-radius: 3px;
   font-family: var(--font-ui);
   font-size: 0.72rem;
@@ -490,9 +537,9 @@ tr:last-child td { border-bottom: none; }
 }
 
 .chapter-project-badge {
-  background: #ede9fe;
-  color: #6d28d9;
-  border-color: #c4b5fd;
+  background: var(--secondary-bg);
+  color: var(--secondary);
+  border-color: var(--secondary);
 }
 
 /* ── Callout boxes ────────────────────────────────────────────── */
@@ -507,8 +554,8 @@ tr:last-child td { border-bottom: none; }
 }
 
 .callout.info  { border-color: var(--accent); }
-.callout.warn  { border-color: var(--warning); }
-.callout.good  { border-color: var(--success); }
+.callout.warn  { border-color: var(--secondary); }
+.callout.good  { border-color: var(--accent-dark); }
 
 /* ── Heading anchor links ─────────────────────────────────────── */
 
