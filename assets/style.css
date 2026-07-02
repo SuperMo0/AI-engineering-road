@@ -3,31 +3,24 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* Solarized-inspired palette (Ethan Schoonover) — colors chosen for
-   low eye strain via calibrated, muted contrast rather than
-   pure-black/pure-white extremes. Only two hues are used across the
-   whole site — primary (--accent, teal) and secondary (--secondary,
-   gold) — each with a light tint (for fills/badges) and a dark/bright
-   variant (for hover and emphasis). Everything else is neutral gray.
-   The same hex values are reused across both themes since Solarized
-   calibrates each accent to read clearly on both the lightest and
-   darkest backgrounds. */
+/* Plain, basic palette — near-monochrome. Light theme: one muted
+   slate accent for links. Dark theme: pure grayscale, no accent hue
+   at all (links/badges use weight + underline instead of color).
+   Headings and body share one ink color; hierarchy comes from
+   weight/size only, not a separate "heading" color. */
 
 :root {
-  --heading:        #586e75; /* base01 — emphasized content, for headings */
-  --text:           #657b83; /* base00 — default body content */
-  --text-muted:     #839496; /* base0  — secondary text */
-  --text-light:     #93a1a1; /* base1  — least prominent text */
-  --bg:             #fdf6e3; /* base3 */
-  --bg-alt:         #eee8d5; /* base2 */
-  --bg-code:        #eee8d5; /* base2 */
-  --border:         #ddd6c1;
-  --accent:         #2aa198; /* primary — cyan */
-  --accent-dark:    #1c7b74; /* primary, dark variant */
-  --accent-bg:      #d9f0ee; /* primary, light tint */
-  --secondary:      #b58900; /* secondary — gold */
-  --secondary-bg:   #f5efd9; /* secondary, light tint */
-  --secondary-bdr:  #d3c7a0; /* secondary, mid tint */
+  --heading:        #4a4a4a; /* same as --text — hierarchy via weight/size, not color */
+  --text:           #4a4a4a;
+  --text-muted:     #767676;
+  --text-light:     #999999;
+  --bg:             #ffffe3;
+  --bg-alt:         #ececec;
+  --bg-code:        #ececec;
+  --border:         #cbcbcb;
+  --accent:         #6d8196; /* muted slate — links only */
+  --accent-dark:    #56687a; /* accent, dark variant (hover) */
+  --accent-bg:      #e4e9ed; /* accent, light tint (badges) */
   --font-body:      'Inter', system-ui, -apple-system, sans-serif;
   --font-ui:        'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:      'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
@@ -38,20 +31,17 @@
 /* ── Dark theme ───────────────────────────────────────────────── */
 
 html.dark {
-  --heading:        #93a1a1; /* base1  — emphasized content, brighter than body */
-  --text:           #839496; /* base0  — default body content (muted, not glaring) */
-  --text-muted:     #657b83; /* base00 */
-  --text-light:     #586e75; /* base01 — least prominent text */
-  --bg:             #002b36; /* base03 */
-  --bg-alt:         #073642; /* base02 */
-  --bg-code:        #073642; /* base02 */
-  --border:         #0a4a58;
-  --accent:         #2aa198; /* primary — cyan */
-  --accent-dark:    #4cc9bd; /* primary, bright variant */
-  --accent-bg:      #0d2b2a; /* primary, dark tint */
-  --secondary:      #b58900; /* secondary — gold */
-  --secondary-bg:   #2b2410; /* secondary, dark tint */
-  --secondary-bdr:  #5c4a12; /* secondary, mid tint */
+  --heading:        #e0e0e0;
+  --text:           #e0e0e0;
+  --text-muted:     #b0b0b0;
+  --text-light:     #888888;
+  --bg:             #55555a;
+  --bg-alt:         #444444;
+  --bg-code:        #444444;
+  --border:         #6b6b70;
+  --accent:         #b0b0b0; /* no color accent in dark mode — same as secondary text */
+  --accent-dark:    #d0d0d0; /* brighter, for hover */
+  --accent-bg:      #444444; /* same as bg-alt — no distinct hue */
 }
 
 /* ── Theme toggle ─────────────────────────────────────────────── */
@@ -268,6 +258,15 @@ pre code {
   font-size: 0.85rem;
 }
 
+/* Minimal syntax highlighting — weight/italic for structure, the
+   single site accent for strings/literals. No extra hues, no
+   separate syntax theme; in dark mode --accent is grayscale so code
+   stays fully monochrome there too. */
+.hljs-comment, .hljs-quote { color: var(--text-muted); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-title, .hljs-section,
+.hljs-doctag, .hljs-type, .hljs-name, .hljs-strong { font-weight: 700; }
+.hljs-string, .hljs-attr, .hljs-number, .hljs-built_in, .hljs-literal { color: var(--accent); }
+
 /* ── Tables ───────────────────────────────────────────────────── */
 
 table {
@@ -324,8 +323,8 @@ tr:last-child td { border-bottom: none; }
 /* ── Assignment section ───────────────────────────────────────── */
 
 .assignment {
-  background: var(--secondary-bg);
-  border: 1px solid var(--secondary-bdr);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 1.5rem 1.75rem;
   margin: 2.5rem 0;
@@ -337,7 +336,7 @@ tr:last-child td { border-bottom: none; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--secondary);
+  color: var(--text);
   border: none;
   margin: 0 0 1rem;
   padding: 0;
@@ -537,9 +536,9 @@ tr:last-child td { border-bottom: none; }
 }
 
 .chapter-project-badge {
-  background: var(--secondary-bg);
-  color: var(--secondary);
-  border-color: var(--secondary);
+  background: var(--accent-dark);
+  color: var(--bg);
+  border-color: var(--accent-dark);
 }
 
 /* ── Callout boxes ────────────────────────────────────────────── */
@@ -554,8 +553,8 @@ tr:last-child td { border-bottom: none; }
 }
 
 .callout.info  { border-color: var(--accent); }
-.callout.warn  { border-color: var(--secondary); }
-.callout.good  { border-color: var(--accent-dark); }
+.callout.warn  { border-color: var(--text); }
+.callout.good  { border-color: var(--text-muted); }
 
 /* ── Heading anchor links ─────────────────────────────────────── */
 
